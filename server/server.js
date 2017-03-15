@@ -58,6 +58,7 @@ app.get('/todos/:id', authenticate, (req, res) => {
 
 app.delete('/todos/:id',authenticate, (req, res) => {
     var id = req.params.id;
+
     if (!ObjectID.isValid(id)) {
             res.status(404).send();
         }
@@ -66,11 +67,11 @@ app.delete('/todos/:id',authenticate, (req, res) => {
         _id: id,
         _creator: req.user._id
     }).then((doc) => {
-        
         if (!doc) {
             res.status(404).send();
         }
-        res.send(doc)
+        
+        res.send({doc})
     }).catch((e) => {
         res.status(400).send(e);
     });
